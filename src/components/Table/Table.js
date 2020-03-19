@@ -1,6 +1,7 @@
 import React from 'react';
-import AddNewRow from './TableComponents/AddNewRow';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import AddNewRow from './TableComponents/AddNewRow';
 import * as actions from '../../store/actions/index';
 import TableTitle from './TableComponents/TableTitle';
 
@@ -78,6 +79,11 @@ const Table = props => {
     </table>
   )
 }
+
+Table.propTypes = {
+  data: PropTypes.array,
+  columnsTitle: PropTypes.array,
+};
 
 /**
  * -----------------------CONNECT REDUX STORE-----------------------

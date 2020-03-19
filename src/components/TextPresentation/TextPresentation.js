@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-const TextArea = (props) => {
+const TextPresentation = (props) => {
   const [data, setData] = React.useState([]);
   const [isJsonIncorrect, setIsJsonIncorrect] = React.useState(false);
 
@@ -50,6 +51,11 @@ const TextArea = (props) => {
   )
 }
 
+TextPresentation.propTypes = {
+  data: PropTypes.array,
+  columnsTitle: PropTypes.array,
+};
+
 /**
  * -----------------------CONNECT REDUX STORE-----------------------
 */
@@ -67,4 +73,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TextArea);
+export default connect(mapStateToProps, mapDispatchToProps)(TextPresentation);

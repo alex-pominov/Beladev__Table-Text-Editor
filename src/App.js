@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as actions from './store/actions/index';
 import Table from './components/Table/Table';
 import TextPresentation from './components/TextPresentation/TextPresentation';
@@ -31,6 +32,10 @@ function App(props) {
     </ErrorBoundary>
   );
 }
+
+App.propTypes = {
+  isViewTypeTable: PropTypes.bool
+};
 
 /**
  * -----------------------CONNECT REDUX STORE-----------------------
