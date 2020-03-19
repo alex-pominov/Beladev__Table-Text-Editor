@@ -6,6 +6,9 @@ import TextPresentation from './components/TextPresentation/TextPresentation';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 function App(props) {
+  const style = {
+    overflowX: 'auto'
+  }
 
   React.useEffect(() => {
     props.getDataFromCsv();
@@ -14,9 +17,16 @@ function App(props) {
   
   return (
     <ErrorBoundary>
-      <div className="container">
-        { props.isViewTypeTable ? <Table /> : <TextPresentation /> }
-        <button onClick={() => props.changeViewType()}>Change view type</button>
+      <div className="container" >
+        <div style={style}>
+          { props.isViewTypeTable ? <Table /> : <TextPresentation /> }
+        </div>
+        <button 
+          style={{marginTop: '20px'}} 
+          onClick={() => props.changeViewType()}
+        >
+          Change view type
+        </button>
       </div>
     </ErrorBoundary>
   );
