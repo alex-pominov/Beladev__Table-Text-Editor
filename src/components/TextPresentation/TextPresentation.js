@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 
-const TextPresentation = (props) => {
+const TextPresentation = props => {
   const [data, setData] = React.useState([]);
   const [isJsonIncorrect, setIsJsonIncorrect] = React.useState(false);
 
@@ -11,16 +11,22 @@ const TextPresentation = (props) => {
     const rows = [];
     rows.push([...props.columnsTitle]);
     props.data.map(row => {
-      return rows.push({...row, id: undefined});
+      return rows.push({ ...row, id: undefined });
     });
-    const parseToJSON = JSON.stringify(rows).replace(/\[{|}]|\[\[/g, '').replace(/},{|],{/g, '\n');
+    const parseToJSON = JSON.stringify(rows)
+      .replace(/\[{|}]|\[\[/g, "")
+      .replace(/},{|],{/g, "\n");
     setData(parseToJSON);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
 
-  const onTextAreaTyping = (text) => {
+  const onTextAreaTyping = text => {
     const lines = text.split(/\n/);
-    const newTitle = lines.splice(0, 1).toString().replace(/"/g, '').split(/,/);
+    const newTitle = lines
+      .splice(0, 1)
+      .toString()
+      .replace(/"/g, "")
+      .split(/,/);
     const wrapped = "[{" + lines.join("},{") + "}]";
     // Ловим ошибку если текст в TEXTAREA введен неверно
     try {
@@ -31,46 +37,51 @@ const TextPresentation = (props) => {
     } catch (error) {
       setIsJsonIncorrect(true);
     }
-  }
-  
+  };
+
   return (
     <>
-      <textarea 
-        style={{width: '100%', height: '300px'}} 
+      <textarea
+        style={{ width: "100%", height: "300px" }}
         defaultValue={data}
-        onChange={(e) => onTextAreaTyping(e.target.value)}
+        onChange={e => onTextAreaTyping(e.target.value)}
       />
-      {isJsonIncorrect 
-        ? <>
-            <p>Введити данные пока не верны. Это сообщение пропадет, когда данные будут введены верно</p> 
-            <p>В качестве примера можете использовать шаблон: <strong>"Age":"52"</strong>, где Age - колонка, 52 - значение</p> 
-          </>
-        : null
-      }
+      {isJsonIncorrect ? (
+        <>
+          <p>
+            Введити данные пока не верны. Это сообщение пропадет, когда данные
+            будут введены верно
+          </p>
+          <p>
+            В качестве примера можете использовать шаблон:
+            <strong>"Age":"52"</strong>, где Age - колонка, 52 - значение
+          </p>
+        </>
+      ) : null}
     </>
-  )
-}
+  );
+};
 
 TextPresentation.propTypes = {
   data: PropTypes.array,
-  columnsTitle: PropTypes.array,
+  columnsTitle: PropTypes.array
 };
 
 /**
  * -----------------------CONNECT REDUX STORE-----------------------
-*/
+ */
 const mapStateToProps = state => {
   return {
     data: state.data,
     columnsTitle: state.tableColumnsTitle
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateData: (data) => dispatch(actions.updateData(data)),
-    updateTitle: (newTitles) => dispatch(actions.updateTitle(newTitles))
-  }
-}
+    updateData: data => dispatch(actions.updateData(data)),
+    updateTitle: newTitles => dispatch(actions.updateTitle(newTitles))
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextPresentation);

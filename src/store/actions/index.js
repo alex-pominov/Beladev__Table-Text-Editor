@@ -1,6 +1,6 @@
 export {
-    getDataFromCsv,
-    changeViewType,
-    updateData,
-    updateTitle
-} from './actions';
+  getDataFromCsv,
+  changeViewType,
+  updateData,
+  updateTitle
+} from "./actions";
